@@ -7,14 +7,8 @@
         <style>
             .ui-menu 
             {
-                width: 400px;
+                width: 100px;
             }
-
-            .mainMenu_hover 
-            { 
-                background-color: springgreen;
-            }
-           
         </style>
         <title>A7 Text Editor</title>
             <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet"/>
@@ -26,19 +20,19 @@
               {
                   var menu = $("#mainMenu").menu();
                   $("#mainMenu").menu("focus", null, $("#mainMenu").menu().find(".ui-menu-item:last"));
-      
+
                  $(menu).mouseleave(function ()
                  {
-                    menu.menu('collapseAll');
-                 });
-              });
+                     menu.menu('collapseAll');
+                  });
 
+              });
         </script>
     </head>
     <body>
         <form runat="server">
             <!-- HTML --> 
-            <ul id = "mainMenu" class="mainMenu">
+            <ul id = "mainMenu" class="mainMenuClass">
                 <li><a>File</a>
                     <ul>
                        <li><a>Open</a></li>
