@@ -5,6 +5,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head runat="server">
         <style>
+            #ListBoxDiv
+            {
+                width: 300px;
+                height: 700px;
+                float:left;
+            }
+
+            #TextBoxDiv
+            {
+                float: right;
+            }
+            /*div
+            {
+                display: inline-block;
+            }*/
         ul 
         {
             list-style-type: none;
@@ -83,6 +98,12 @@
                 </li>
                 <li><a>Close</a></li>
             </ul>
+            <div id="ListBoxDiv">
+                <asp:ListBox ID="ListBox1" runat="server" Height="600px" Width="280px"></asp:ListBox>
+            </div>
+            <div id="TextBoxDiv">
+                <asp:TextBox ID="TextBox1" runat="server" Height="600px" Width="1176px"></asp:TextBox>
+            </div>
         </form>
     </body>
 </html>
