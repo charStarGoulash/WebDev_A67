@@ -5,42 +5,83 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head runat="server">
         <style>
-            .ui-menu 
-            {
-                width: 100px;
-            }
+        ul 
+        {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #333;
+        }
+
+        li 
+        {
+            float: left;
+        }
+
+        li a, .dropbtn 
+        {
+            display: inline-block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        li a:hover, .dropdown:hover .dropbtn 
+        {
+            background-color: red;
+        }
+
+        li.dropdown 
+        {
+            display: inline-block;
+        }
+
+        .dropdown-content 
+        {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a 
+        {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+
+        .dropdown-content a:hover 
+        {
+            background-color: red;
+
+        }
+
+        .dropdown:hover .dropdown-content 
+        {
+            display: block;
+        }
         </style>
         <title>A7 Text Editor</title>
-            <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet"/>
-            <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
-            <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-        <!-- Javascript -->
-        <script>
-              $(function ()
-              {
-                  var menu = $("#mainMenu").menu();
-                  $("#mainMenu").menu("focus", null, $("#mainMenu").menu().find(".ui-menu-item:last"));
-
-                 $(menu).mouseleave(function ()
-                 {
-                     menu.menu('collapseAll');
-                  });
-
-              });
-        </script>
     </head>
     <body>
         <form runat="server">
-            <!-- HTML --> 
-            <ul id = "mainMenu" class="mainMenuClass">
-                <li><a>File</a>
-                    <ul>
-                       <li><a>Open</a></li>
-                       <li><a>Save</a></li>
-                       <li><a>Save As</a></li>
-                    </ul>
-                 </li>
-                 <li><a>Close</a></li>                 
+            <ul>
+                <li class="dropdown">
+                    <a class="dropbtn">File</a>
+                    <div class="dropdown-content">
+                        <a>Open</a>
+                        <a>Save</a>
+                        <a>Save As</a>
+                    </div>
+                </li>
+                <li><a>Close</a></li>
             </ul>
         </form>
     </body>
