@@ -1,0 +1,8 @@
+﻿.editWindow {
+    position:absolute;
+    width: 400px;
+    height: 100px;
+    /* Optional - just for DIV)*/
+    border: solid 1px #000000;
+    background-color: grey;
+}

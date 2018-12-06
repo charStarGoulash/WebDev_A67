@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>WDD Assignment #7</title>
+
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>    
+    <script>
+        var uri = 'api/textfile';
+
+        function populateDropdown() {
+            $("#messageWindow").text("Loading File list...");
+            $.getJSON(uri)
+                .done(function (data) {
+                    var $dropdown = $("#files");
+                    $dropdown.empty();
+                    $.each(data, function () {
+                        $dropdown.append($("<option />").val(this.fileID).text(this.fileName));
+                    });
+                    $("#messageWindow").text("Done!");
+                });            
+        }
+
+        $(document).ready(function () {
+            $("#loadButton").click(find);
+            $("#saveButton").click(saveFile);
+            // Send an AJAX request
+            populateDropdown();
+        });
+
+        function formatItem(item) {
+            return item.fileID + ". " + item.fileName;
+        }
+
+        function find() {
+            var id = $('#files').val();
+            $.getJSON(uri + '/' + id)
+                .done(function (data) {
+                    $("#messageWindow").text(data.fileName);
+                    $("#saveFileName").val(data.fileName);
+                    $("#editWindow").text(data.fileContent);
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    $('#messageWindow').text('Error: ' + err);
+                });
+        }
+
+        function saveFile() {
+            $("#messageWindow").text("Saving File...");
+            $.post(uri + "/SaveFile",
+                {
+                    dataType: 'json',
+                    contentType: "application/json",
+                    fileName: $("#saveFileName").val(),
+                    fileContent: $("#editWindow").val()
+                },
+                function (status) {
+                    populateDropdown();
+                    alert("Status: " + status);
+                });
+        }; 
+
+        function find() {
+            var id = $('#files').val();
+            $("#saveFileName").val(id);
+            $.getJSON(uri + '/' + id)
+                .done(function (data) {
+                    $("#saveFileName").val(data.fileName);
+                    $("#editWindow").val(data.fileContent);
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    $('#saveFileName').val('Error: ' + err);
+                });
+        }
+
+        function ajaxCallComplete(responseTxt, statusTxt, xhr) {
+            if (statusTxt == "success") {
+                alert("External content loaded successfully!");
+            }
+            if (statusTxt == "error") {
+                alert("Error: " + xhr.status + ": " + xhr.statusText);
+            }
+        }
+    </script>
+</head>
+<body>
+    <script type="text/css" src="Styles/style.css">
+    </script>
+    <div>
+        <h1>WDD: A7 - Text Editor in JQuery/AJAX</h1>
+        <select id="files"></select>
+        <input type="button" id="loadButton" value="Load File" />
+        <input type="button" id="saveButton" value="Save File" />
+        <input type="text" id="saveFileName" value="" />
+    </div>
+    <div>
+        <textarea id="editWindow" class="editWindow"></textarea>
+        <p id="messageWindow">sample</p>
+    </div>
+</body>
+</html>
