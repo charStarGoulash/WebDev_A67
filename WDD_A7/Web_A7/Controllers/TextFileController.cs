@@ -19,9 +19,11 @@ namespace Web_A7.Controllers
         //string dirName = @"C:\tmp";
 
         private List<TextFile> GetAllFiles()
-        {
+        {            
             List<TextFile> lFiles = new List<TextFile>();
             int i = 0;
+            if (!Directory.Exists(dirName + @"\MyFiles")) { Directory.CreateDirectory(dirName + @"\MyFiles"); }
+
             foreach (string s in Directory.EnumerateFiles(dirName + @"\MyFiles"))
             {
                 string[] str = s.Split('\\');
@@ -53,6 +55,7 @@ namespace Web_A7.Controllers
                 string fileContent = obj.fileContent;
                 string filePath = dirName + @"\MyFiles\" + fileName;
 
+                if (!Directory.Exists(dirName + @"\MyFiles")) { Directory.CreateDirectory(dirName + @"\MyFiles"); }
                 File.WriteAllText(filePath, fileContent);
 
                 return "File saved successfully";
