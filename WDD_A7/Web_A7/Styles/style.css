@@ -1,9 +1,9 @@
 ﻿/*
-* FILE :style.css
-* PROJECT : PROG2000 - Assignment #7
-* PROGRAMMER : Alex Kozak & Attila Katona
+* FILE          : style.css
+* PROJECT       : PROG2000 - Assignment #7
+* PROGRAMMER    : Alex Kozak & Attila Katona
 * FIRST VERSION : 2018-12-06
-* DESCRIPTION : This is where all CSS styling for index.html is located
+* DESCRIPTION   : This is where all CSS styling for index.html is located
 */
 
 /*CSS  for .editWindow - Some attributes referenced from https://codepen.io/steinvc/pen/kxbgH*/ 
@@ -93,6 +93,7 @@ body
     border: solid #001119;
     border-radius: 6px;
 }
+
 /*Style for the drop down box, a select box*/
 .selectBox {
     height: 35px;

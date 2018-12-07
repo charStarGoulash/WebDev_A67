@@ -1,17 +1,39 @@
 ﻿<!DOCTYPE html>
+<!--
+        FILE          : index.html
+        PROJECT       : PROG2000 - Assignment #7
+        PROGRAMMER    : Alex Kozak & Attila Katona
+        FIRST VERSION : 2018-12-06
+        DESCRIPTION   : This file contains the web page which interacts with the asp.net API. This page
+                    allows the user to enter information into the text field, and save it to the server
+                    with any requested file name. This also allows the user to request the content of
+                    any other files in the fdirectory selected by the API, with the ability to overwrite
+                    or change files.
+-->
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>WDD Assignment #7</title>
 
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
     <script>
+        // the path to the API
         var uri = 'api/textfile';
 
+        /* FUNCTION     :
+         * DESCIPTION   : This function populates the dropdown box with the
+         *              current list of files in the API's working directory.
+         */
         function populateDropdown() {
             var $dropdown = $("#files");
+            // clear the dropdown and add a temporary message to state that the list is loading
+            $dropdown.empty();
             $dropdown.append($("<option />").text("Loading file list..."));
+
+            // request the list of files from the api
             $.getJSON(uri)
-                .done(function (data) {                    
+                .done(function (data) {
+                    // clear the dropdown and populate it with all the files from the stored folder
                     $dropdown.empty();
                     $.each(data, function () {
                         $dropdown.append($("<option />").val(this.fileID).text(this.fileName));
@@ -19,46 +41,54 @@
                 });
         }
 
+        /* FUNCTION     : Document Startup
+         * DESCIPTION   : This function requests the population of the combobox and
+         *              hooks up the buttons on the screen to their functions
+         */
         $(document).ready(function () {
-            $("#loadButton").click(find);
-            $("#saveButton").click(saveFile);                   
-            // Send an AJAX request
+            // Set up the click handlers for the load/save buttons
+            $("#loadButton").click(findFile);
+            $("#saveButton").click(saveFile);
+            // Set up the currently existing files
             populateDropdown();
         });
 
-        function formatItem(item) {
-            return item.fileID + ". " + item.fileName;
-        }
-
-        function find() {
-            var id = $('#files').val();
-            $.getJSON(uri + '/' + id)
-                .done(function (data) {
-                    $("#saveFileName").val(data.fileName);
-                    $("#text").text(data.fileContent);
-                })
-                .fail(function (jqXHR, textStatus, err) {
-                });
-        }
-
+        /* FUNCTION     : saveFile
+         * DESCIPTION   : This function Saves the current contents of the
+         *              main text window, sending a post request to the API with
+         *              the current value of the save file text box as the file name
+         */
         function saveFile() {
-            $("#messageWindow").text("Saving File...");
-            $.post(uri + "/SaveFile",
-                {
-                    dataType: 'json',
-                    contentType: "application/json",
-                    fileName: $("#saveFileName").val(),
-                    fileContent: $("#text").val()
-                },
-                function (status) {
-                    populateDropdown();
-                    alert("Status: " + status);
-                });
+            // only save the file is there is a specified name to save the file to
+            if ($("#saveFileName").val() != "") {
+                // post to api/textfile/SaveFile with the information needed to save the file
+                $.post(uri + "/SaveFile",
+                    {
+                        dataType: 'json',
+                        contentType: "application/json",
+                        fileName: $("#saveFileName").val(),
+                        fileContent: $("#text").val()
+                    },
+                    function (status) {
+                        // re-populate the combobox list to reflect the updated list of files, inform the user of the status of the request
+                        populateDropdown();
+                        alert("Status: " + status);
+                    });
+            }
+            else {
+                alert("You must enter a file name to save this file.")
+            }
         };
 
-        function find() {
+        /* FUNCTION     : findFile
+         * DESCIPTION   : This function requests a single file from the API and
+         *              populates the edit window with the returned contents of the file.
+         *              This also sets the current value for the save name to be the same name
+         *              as the file being received.
+         */
+        function findFile() {
+            // request a single file from the api with the ID from the combobox
             var id = $('#files').val();
-            $("#saveFileName").val(id);
             $.getJSON(uri + '/' + id)
                 .done(function (data) {
                     $("#saveFileName").val(data.fileName);
@@ -68,19 +98,11 @@
                     $('#saveFileName').val('Error: ' + err);
                 });
         }
-
-        function ajaxCallComplete(responseTxt, statusTxt, xhr) {
-            if (statusTxt == "success") {
-                alert("External content loaded successfully!");
-            }
-            if (statusTxt == "error") {
-                alert("Error: " + xhr.status + ": " + xhr.statusText);
-            }
-        }
     </script>
     <link rel="stylesheet" type="text/css" href="Styles/style.css">
 </head>
 <body>
+    <!-- The top bar with the buttons, title, and text boxes -->
     <div class="fullTopDiv">
         <div class="titleDiv">
             <h1>WDD: A7 - Text Editor in JQuery/AJAX</h1>
@@ -88,10 +110,11 @@
         <div class="editOptions">
             <select class="selectBox" id="files"></select>
             <input class="button allButton" type="button" id="loadButton" value="Load File" />
-            <input class="button allButton" type="button" id="saveButton" value="Save File" />
+            <input class="button allButton" type="button" id="saveButton" value="Save File As" />
             <input class="textBox" type="text" id="saveFileName" value="" />
         </div>
     </div>
+    <!-- The main portion of the window with the text input -->
     <div>
         <textarea id="text" class="editWindow"></textarea>
     </div>
