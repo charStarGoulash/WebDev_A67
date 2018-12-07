@@ -8,9 +8,10 @@
         var uri = 'api/textfile';
 
         function populateDropdown() {
+            var $dropdown = $("#files");
+            $dropdown.append($("<option />").text("Loading file list..."));
             $.getJSON(uri)
-                .done(function (data) {
-                    var $dropdown = $("#files");
+                .done(function (data) {                    
                     $dropdown.empty();
                     $.each(data, function () {
                         $dropdown.append($("<option />").val(this.fileID).text(this.fileName));
@@ -20,7 +21,7 @@
 
         $(document).ready(function () {
             $("#loadButton").click(find);
-            $("#saveButton").click(saveFile);            
+            $("#saveButton").click(saveFile);                   
             // Send an AJAX request
             populateDropdown();
         });
