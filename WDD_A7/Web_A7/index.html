@@ -22,9 +22,10 @@
 
         $(document).ready(function () {
             $("#loadButton").click(find);
-            $("#saveButton").click(saveFile);
+            $("#saveButton").click(saveFile);            
             // Send an AJAX request
             populateDropdown();
+            $("#text").autosize();
         });
 
         function formatItem(item) {
@@ -37,7 +38,7 @@
                 .done(function (data) {
                     $("#messageWindow").text(data.fileName);
                     $("#saveFileName").val(data.fileName);
-                    $("#editWindow").text(data.fileContent);
+                    $("#text").text(data.fileContent);
                 })
                 .fail(function (jqXHR, textStatus, err) {
                     $('#messageWindow').text('Error: ' + err);
@@ -51,7 +52,7 @@
                     dataType: 'json',
                     contentType: "application/json",
                     fileName: $("#saveFileName").val(),
-                    fileContent: $("#editWindow").val()
+                    fileContent: $("#text").val()
                 },
                 function (status) {
                     populateDropdown();
@@ -65,7 +66,7 @@
             $.getJSON(uri + '/' + id)
                 .done(function (data) {
                     $("#saveFileName").val(data.fileName);
-                    $("#editWindow").val(data.fileContent);
+                    $("#text").val(data.fileContent);
                 })
                 .fail(function (jqXHR, textStatus, err) {
                     $('#saveFileName').val('Error: ' + err);
@@ -96,7 +97,7 @@
         </div>
     </div>
     <div>
-        <textarea id="editWindow" class="editWindow"></textarea>
+        <textarea id="text" class="editWindow"></textarea>
         <p id="messageWindow">sample</p>
     </div>
 </body>

@@ -8,31 +8,26 @@
 
 /*CSS  for .editWindow - Some attributes referenced from https://codepen.io/steinvc/pen/kxbgH*/ 
 /*The textable area*/
-.editWindow {
-    width: 400px;
-    height: 100px;
+#text {
+    width: 500px;
+    height: 600px;
+    margin: 16px auto 16px auto;
     border: solid 1px #000000;
     background-color: grey;
-    display: inline-block;
-    width: 500px;
-    overflow: hidden;
-    background-color: #FFF;
+    display: block;
     color: #222;
     font-family: Courier, monospace;
     font-weight: normal;
     font-size: 24px;
-    resize: none;
+    resize: vertical;
     line-height: 40px;
-    padding-left: 100px;
-    padding-right: 100px;
-    padding-top: 45px;
-    padding-bottom: 34px;
+    padding: 45px 100px 34px 100px;
     background-image: url(/Images/lines.png), url(/Images/paper.png);
     background-repeat: repeat-y, repeat;
     -webkit-border-radius: 12px;
     border-radius: 12px;
-    -webkit-box-shadow: 0px 2px 14px #000;
-    box-shadow: 0px 2px 14px #000;
+    -webkit-box-shadow: 0 2px 14px #000;
+    box-shadow: 0 2px 14px #000;
     border-top: 1px solid #FFF;
     border-bottom: 1px solid #FFF;
 }
@@ -47,20 +42,17 @@ h1
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #77180A;
     color: white;
-    border-radius: 25px;
 }
 /*The buttons and file save text area*/
 .editOptions {
     padding-top: 10px;
     padding-bottom: 12px;
-    background-color: #77180A;
+    text-align: center;
 }
 /*The main div for the title and buttons area*/
 .fullTopDiv {
-    background-color: #77180A;
-    border-radius: 25px;
+    background-color: rgba(0,0,0,0.5);
 }
 /*Putting an image in the background of the entire body*/
 body 
@@ -77,37 +69,36 @@ body
     display: inline-block;
     font-size: 12px;
     margin: 4px 2px;
-    -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
     cursor: pointer;
 }
 /*The button before a hover style*/
 .allButton {
-    background-color: black;
+    background-color: #001119;
     color: white;
-    border: 2px solid black;
-    border-radius:12px;
+    border: solid #DDD;
+    border-radius: 2px;
+    margin-left: 24px;
+    margin-right: 24px;
 }
 /*The button hover style*/
 .allButton:hover 
 {
-    background-color: #77180A;
+    background-color: #DDD;
     color: black;
 }
 /*The textbox that allows user to write the name of the file they would like saved style*/
-.textBox 
-{
+.textBox {
     height: 26px;
-    border: 2px solid black;
-    border-radius: 12px;
+    border: solid #001119;
+    border-radius: 6px;
 }
 /*Style for the drop down box, a select box*/
 .selectBox {
     height: 35px;
-    border: 2px solid black;
-    border-radius: 12px;
+    border: solid #001119;
+    border-radius: 6px;
     min-width: 180px;
-    background: transparent url(/Images/selectBoxArrow.png) no-repeat 95% center;
 }
 
 /* for IE and Edge */
