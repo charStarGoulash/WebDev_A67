@@ -8,7 +8,6 @@
         var uri = 'api/textfile';
 
         function populateDropdown() {
-            $("#messageWindow").text("Loading File list...");
             $.getJSON(uri)
                 .done(function (data) {
                     var $dropdown = $("#files");
@@ -16,7 +15,6 @@
                     $.each(data, function () {
                         $dropdown.append($("<option />").val(this.fileID).text(this.fileName));
                     });
-                    $("#messageWindow").text("Done!");
                 });
         }
 
@@ -25,7 +23,6 @@
             $("#saveButton").click(saveFile);            
             // Send an AJAX request
             populateDropdown();
-            $("#text").autosize();
         });
 
         function formatItem(item) {
@@ -36,12 +33,10 @@
             var id = $('#files').val();
             $.getJSON(uri + '/' + id)
                 .done(function (data) {
-                    $("#messageWindow").text(data.fileName);
                     $("#saveFileName").val(data.fileName);
                     $("#text").text(data.fileContent);
                 })
                 .fail(function (jqXHR, textStatus, err) {
-                    $('#messageWindow').text('Error: ' + err);
                 });
         }
 
@@ -98,7 +93,6 @@
     </div>
     <div>
         <textarea id="text" class="editWindow"></textarea>
-        <p id="messageWindow">sample</p>
     </div>
 </body>
 </html>
